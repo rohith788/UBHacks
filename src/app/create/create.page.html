@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding fullscreen>
+  <form [formGroup]="infoForm">
+    <ion-item>
+      <ion-label position="floating">Info Title</ion-label>
+      <ion-input type="text" formControlName="info_title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Info Description</ion-label>
+      <ion-input type="text" formControlName="info_description"></ion-input>
+    </ion-item>
+    <ion-button shape="round" color="primary" expand="block" [disabled]="!infoForm.valid" (click)="saveInfo()">Save</ion-button>
+  </form>
+
+
+  <!-- flajdklasjflsj -->
+  <form [formGroup]="availableForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" formControlName="volName"></ion-input>
+      </ion-item>
+
+      <ion-item-divider></ion-item-divider>
+      <ion-label>Start Time</ion-label>
+      <ion-item *ngFor="let st of start_time">
+      <ion-select-option   value="{{st}}">{{st}}</ion-select-option>
+
+      </ion-item>
+
+     
+      <!-- <ion-item>
+        <ion-label>Start Time</ion-label>
+        <ion-datetime formControlName="start_time" display-format="HH:mm " picker-format="HH:mm " ></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>End Time</ion-label>
+        <ion-datetime formControlName="end_time" display-format="HH:mm " picker-format="HH:mm " ></ion-datetime>
+      </ion-item> -->
+
+      
+    </ion-list>
+    <ion-button shape="round" color="primary" expand="block" [disabled]="!availableForm.valid" (click)="saveDuration()">Mark</ion-button>
+  </form>
+</ion-content>

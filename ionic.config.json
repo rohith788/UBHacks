@@ -1,5 +1,7 @@
 {
   "name": "ubhacking",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
