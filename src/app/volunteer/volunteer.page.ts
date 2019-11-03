@@ -8,17 +8,43 @@ import * as firebase from 'Firebase';
   styleUrls: ['./volunteer.page.scss'],
 })
 export class VolunteerPage implements OnInit {
+  time_array = [ 
+    {time: '09:00', status: true}, 
+  {time: '10:00', status: true}, 
+  {time: '11:00', status: true}, 
+  {time: '12:00', status: true}, 
+  {time: '13:00', status: true}, 
+  {time: '14:00', status: true}, 
+  {time: '15:00', status: true}, 
+  {time: '16:00', status: true}, 
+  {time: '17:00', status: true}, 
+  {time: '18:00', status: true}, 
+  {time: '19:00', status: true}, 
+  {time: '20:00', status: false}];
+  status_array = []
   infos = [];
-  ref = firebase.database().ref('infos/');
+  ref1 = firebase.database().ref('infos/');
+  ref = firebase.database().ref('timings/');
 
   constructor(public alertController: AlertController,public router: Router, public loadingController: LoadingController) {
-    this.ref.on('value', resp => {
+    this.ref1.on('value', resp => {
       this.infos = [];
       this.infos = snapshotToArray(resp);
     });
+    // this.ref.on('value', resp => {
+    //   this.time_array = [];
+    //   var data = snapshotToArray(resp);
+    //   console.log(data);
+    // })
    }
    addInfo() {
     this.router.navigate(['/add-info']);
+  }
+  changeStatus(i) {
+    if( this.time_array[i].status) {
+      this.time_array[i].status = !this.time_array[i].status
+    }
+    console.log(this.time_array[i]);
   }
 
   edit(key) {
@@ -26,30 +52,18 @@ export class VolunteerPage implements OnInit {
   }
 
   async delete(key) {
-    const alert = await this.alertController.create({
-      header: 'Confirm!',
-      message: 'Are you sure want to delete this info?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('cancel');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            firebase.database().ref('infos/'+key).remove();
-          }
-        }
-      ]
-    });
-  
-    await alert.present();
+    
+      firebase.database().ref('timings/'+key).remove();
+         
   }
 
   ngOnInit() {
+  }
+  saveInfo() {
+    firebase.database().ref('timings/').remove();
+    let newInfo = firebase.database().ref('timings/').push();
+    newInfo.set(this.time_array);
+    // this.router.navigate(['/timings/'+newInfo.key]);
   }
 
   

@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import * as firebase from 'Firebase';
+import { ApiService } from '../api.service';
 declare var webkitSpeechRecognition: any;
 
 
@@ -11,10 +12,16 @@ declare var webkitSpeechRecognition: any;
 })
 export class HomePage {
 
+  smsData = {
+    From: '+12013409093',
+    To: '+17162758423',
+    Body: 'Test'
+  }
+
   isRecording = false;
   isWebSpeechRecording = false;
-  matches: string[] = ['Press red button and start speaking'];
-  response = "We have sent your request to one of the volunteers";
+  matches: string[] = [];
+  response = 'Press red button and start speaking';
   recording = {
     name: 'John',
     text: '',
@@ -22,7 +29,9 @@ export class HomePage {
   }
 
   constructor(private readonly changeDetectorRef: ChangeDetectorRef,
-    private readonly loadingCtrl: LoadingController) {}
+    private readonly loadingCtrl: LoadingController,
+    private apiService: ApiService
+    ) {}
 
     async movieSearch(searchTerms: string[]) {
       if (searchTerms && searchTerms.length > 0) {
@@ -81,11 +90,19 @@ export class HomePage {
     let newInfo = firebase.database().ref('recordings/').push();
     this.recording.text = this.matches[0];
     newInfo.set(this.recording).then((value) => {
+      this.response =  "We have sent your request to one of the volunteers.";
       speechSynthesis.speak(new SpeechSynthesisUtterance(this.response));
-      this.matches[0] = this.response;
-
+      // this.matches[0] = this.response;
+      this.sendMsg()
     })
     // this.router.navigate(['/detail/'+newInfo.key]);
+  }
+  sendMsg() {
+    this.smsData.Body = this.matches[0];
+    this.apiService.sendNotification(this.smsData)
+    // .subscribe((data) => {
+    //   console.log(data)
+    // })
   }
 
 }
