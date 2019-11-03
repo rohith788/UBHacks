@@ -31,12 +31,13 @@ export class VolunteerPage implements OnInit {
       this.infos = [];
       this.infos = snapshotToArray(resp);
     });
-    // this.ref.on('value', resp => {
-    //   this.time_array = [];
-    //   var data = snapshotToArray(resp);
-    //   console.log(data);
-    // })
+    this.ref.on('value', resp => {
+      var data = snapshotToArray(resp);
+    this.time_array = data[0];
+    console.log(data);
+    })
    }
+   
    addInfo() {
     this.router.navigate(['/add-info']);
   }

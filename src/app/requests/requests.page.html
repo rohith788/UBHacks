@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>requests</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card *ngFor="let r of recordings">
+        <ion-item>
+          <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+          <ion-label>{{ r.name }} - {{ r.mob }}</ion-label>
+          <ion-button color="danger" fill="outline" slot="end" (click)="delete(r.key)">Delete</ion-button>
+        </ion-item>
+      
+        <ion-card-content>
+         {{ r.text }}
+        </ion-card-content>
+      </ion-card>
+</ion-content>
