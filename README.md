@@ -9,11 +9,11 @@ How we built it
 We used Ionic Framework 5 with firebase for the core functionality. The voice recognition and text to speech is implemented using the Twilio API.
 
 Built With
-angular.js
-css3
-firebase
-html5
-ionic
-javascript
-scss
+angular.js,
+css3,
+firebase,
+html5,
+ionic,
+javascript,
+scss,
 twilio
